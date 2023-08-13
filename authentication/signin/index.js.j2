@@ -1,0 +1,11 @@
+const { Authenticator } = require('cognito-at-edge');
+
+const authenticator = new Authenticator({
+  // Replace these parameter values with those of your own environment
+  region: '{{ region }}', // user pool region
+  userPoolId: '{{ user_pool_id }}', // user pool ID
+  userPoolAppId: '{{ user_pool_app_id }}', // user pool app client ID
+  userPoolDomain: '{{ user_pool_domain }}.auth.eu-west-1.amazoncognito.com', // user pool domain
+});
+
+exports.handler = async (request) => authenticator.handle(request);

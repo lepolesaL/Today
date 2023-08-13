@@ -1,0 +1,41 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/src:/src
+  
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - 8000:5000
+    environment:
+      - MONGODB_URL=mongodb://admin:admin@mongodb:27017
+    depends_on:
+    - mongodb
+    command: ["bash", "-c", "uvicorn main:app --reload --host=0.0.0.0 --port=5000 --log-level=debug"]
+    volumes:
+      - ./backend/app:/app
+      # mongodb:
+      #   condition: service_healthy
+
+  mongodb:
+    image: mongo:4.4
+    # restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: today
+    volumes:
+      - mongo_data:/data/db
+    # healthcheck:
+    #   test: [ "CMD", "pg_isready" ]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+volumes:
+  mongo_data:

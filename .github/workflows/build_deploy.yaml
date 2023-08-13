@@ -1,0 +1,6 @@
+on: [push]
+jobs:
+  build-app:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "build app here"

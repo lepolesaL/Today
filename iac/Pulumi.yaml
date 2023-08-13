@@ -1,0 +1,10 @@
+name: todo_app
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: deploy todo app in aws
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-python
